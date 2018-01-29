@@ -25,7 +25,7 @@ import CoreBluetooth
 internal typealias VersionCallback = (_ major: UInt8, _ minor: UInt8) -> Void
 
 @objc internal class DFUVersion : NSObject, CBPeripheralDelegate {
-    static let UUID = CBUUID(string: "00001534-1212-EFDE-1523-785FEABCD123")
+    static let UUID = CBUUID(string: "0000FF44-1212-abcd-1523-785FEABCD123")
     
     static func matches(_ characteristic: CBCharacteristic) -> Bool {
         return characteristic.uuid.isEqual(UUID)
