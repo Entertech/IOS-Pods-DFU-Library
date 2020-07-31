@@ -26,7 +26,7 @@ internal typealias VersionCallback = (_ major: UInt8, _ minor: UInt8) -> Void
 
 @objc internal class DFUVersion : NSObject, CBPeripheralDelegate {
     //static let UUID = CBUUID(string: "0000FF44-1212-abcd-1523-785FEABCD123")
-    static let UUID = CBUUID(string: "")
+    static let UUID = CBUUID(string: "0000FF44-1212-abcd-1523-785FEABCD124")
     static func matches(_ characteristic: CBCharacteristic) -> Bool {
         return characteristic.uuid.isEqual(UUID)
     }
