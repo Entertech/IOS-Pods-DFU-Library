@@ -213,7 +213,8 @@ import CoreBluetooth
         // Future implementations of legacy DFU will advertise directly with the same
         // address no matter whether the device was bonded or not. In SDK 6.1 there was
         // no DFU Version characteristic.
-        return version == nil
+        //return version == nil
+        return true
     }
     
     /**
