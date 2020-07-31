@@ -28,27 +28,19 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
+import Foundation
 import CoreBluetooth
 
-/// The default selector.
-///
-/// Selects the first device with Legacy or Secure DFU Service UUID in the advertising packet.
-@objc open class DFUPeripheralSelector : NSObject, DFUPeripheralSelectorDelegate {
-    
-    open func select(_ peripheral: CBPeripheral,
-                     advertisementData: [String : AnyObject],
-                     RSSI: NSNumber,
-                     hint name: String? = nil) -> Bool {
-        // peripheral.name may be cached, use the name from advertising data
-        if let name = name,
-           let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            return localName == name
-        }
-        return true
-    }
-    
-    open func filterBy(hint dfuServiceUUID: CBUUID) -> [CBUUID]? {
-        return [dfuServiceUUID]
-    }
-}
+/// Describes a DFU Characteristic.
+internal protocol DFUCharacteristic {
 
+    /// Discovered characteristic.
+    var characteristic: CBCharacteristic { get }
+
+    /// Logger helper.
+    ///
+    /// The logger inside may be `nil`, but the helper may not.
+    var logger: LoggerHelper { get }
+
+    init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper)
+}
