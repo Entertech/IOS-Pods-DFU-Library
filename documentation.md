@@ -1,6 +1,6 @@
 # DFU Library - iOS
 
-The DFU Library for iOS 8+ adds the DFU feature to the iOS project. It is written in Swift 3.0.1 but is compatible with Objective-C.
+The DFU Library for iOS 9+ adds the DFU feature to the iOS project. It is written in Swift 5.2 but is compatible with Objective-C.
 
 ### Features:
 
@@ -19,14 +19,21 @@ The DFU Library for iOS 8+ adds the DFU feature to the iOS project. It is writte
 #### Error handling
 In case of any communication error the peripheral device will never be bricked. When an application or a bootloader is updated, the previous application (or bootloader, in case there was no application) is restored. When a Softdevice is updated, the previous bootloader will be restored as the application had to be removed to in order to make space for the new version of the Softdevice. You will still be able to repeat the update and flash the Softdevice and the new application again.
 
+### Known issues
+
+1. Since iOS 13.3 (?) devices with Legacy DFU that do not use bonding, but use direct advertising in DFU Bootloader mode cannot be updated anymore.
+    The same applies to Android devices with latest security patches. The solution is to modify the bootlaoder on a device to use non-direct advertising, but
+    in order to update devices that are already in production, older, not updated devices are required. Nothing can be done on the library side, as the iOS
+    just stopped reporting such advertising packets.
+
 ### Requirements
 
-* **An iPhone 4S or newer with iOS 8+**
+* **An iPhone 4S or iPad 2 or newer with iOS 9+**
 
     Support for the Bluetooth 4.0 technology is required.
 * **nRF5x device for testing.**
 
-   A nRF5x Series device is required to test the working solution. If your final product is not available, use the nRF51 DK, which you can find [here](http://www.nordicsemi.com/eng/Products/nRF51-DK "nRF51 DK") or [here](http://www.nordicsemi.com/eng/Products/Bluetooth-Smart-Bluetooth-low-energy/nRF52-DK "nRF52 DK").
+   A nRF5x Series device is required to test the working solution. If your final product is not available, use the nRF5x DK, which you can find [here](http://www.nordicsemi.com/eng/Products/nRF51-DK "nRF51 DK") or [here](http://www.nordicsemi.com/eng/Products/Bluetooth-Smart-Bluetooth-low-energy/nRF52-DK "nRF52 DK").
 
 ### Integration
 
@@ -75,13 +82,15 @@ To include the library in your project do one of those options:
    Add (drag&drop) the DFULibrary.framework product file to your Target's Embedded Binaries.
    A framework build may be necessary. The framework must exist (color black, not red).
 
-If you decide to use option **2** or **3**,  make sure you have the `Embedded Content contains Swift code` set to `YES` in your target's **Build Options->Build Settings**
+If you decide to use option **2** or **3**,  make sure you have the `Embedded Content contains Swift code` set to `YES` in your 
+target's **Build Options->Build Settings**
 
 ### Usage
 
 To start the DFU process you have to do 2 things:
 
-1. Create a DFUFirmware object using a NSURL to a Distribution Packet (ZIP), or using a NSURLs to a BIN/HEX file, DAT file (optionally) and by specifying a file type (Softdevice, Bootloader or Application).
+1. Create a `DFUFirmware` object using a `URL` to a Distribution Packet (ZIP), or using a `URL`s to a BIN/HEX file, DAT file (optionally) 
+    and by specifying a file type (Softdevice, Bootloader or Application).
 
      Objective-C:
     ```objective-c 
@@ -96,13 +105,16 @@ To start the DFU process you have to do 2 things:
     let selectedFirmware = DFUFirmware(urlToBinOrHexFile: url, urlToDatFile: datUrl, type: DFUFirmwareType.Application)
     ```
 
-2. The DFUFirmware object allows you to get basic information about the firmware, like sizes of each component or number of parts. Number of parts is the number of connections required to send all content of the Distribution Packet. It is equal to 1 unless a ZIP file contain a Softdevice and/or Bootloader and an Application. The Softdevice and/or Bootloader will be sent as part one, then the DFU target device will disconnect, reset and DFU Service will connect again and send the Application as part 2.
+2. The `DFUFirmware` object allows you to get basic information about the firmware, like sizes of each component or number of parts. 
+    Number of parts is the number of connections required to send all content of the Distribution Packet. It is equal to 1 unless a ZIP file 
+    contain a Softdevice and/or Bootloader and an Application. The Softdevice and/or Bootloader will be sent as part one, then the DFU 
+    target device will disconnect, reset and DFU Service will connect again and send the Application as part 2.
 
-3. Use the DFUServiceInitializer to initialize the DFU process.
+3. Use the `DFUServiceInitializer` to initialize the DFU process.
 
     Objective-C:
     ```objective-c
-    DFUServiceInitiator *initiator = [[DFUServiceInitiator alloc] initWithCentralManager: centralManager target:selectedPeripheral];
+    DFUServiceInitiator *initiator = [[DFUServiceInitiator alloc] init];
     [initiator withFirmware:selectedFirmware];
     // Optional:
     // initiator.forceDfu = YES/NO; // default NO
@@ -112,41 +124,28 @@ To start the DFU process you have to do 2 things:
     initiator.progressDelegate = self; // - to show progress bar
     // initiator.peripheralSelector = ... // the default selector is used
    
-    DFUServiceController *controller = [initiator start];
+    DFUServiceController *controller = [initiator startWithTarget: peripheral];
     ...
     ```
     Swift:
     ```swift
-    let initiator = DFUServiceInitiator(centralManager: centralManager, target: peripheral).with(firmware: selectedFirmware)
+    let initiator = DFUServiceInitiator().with(firmware: selectedFirmware)
     // Optional:
-    // initiator.forceDfu = true/false; // default false
-    // initiator.packetReceiptNotificationParameter = N; // default is 12
-    initiator.logger = self; // - to get log info
-    initiator.delegate = self; // - to be informed about current state and errors 
-    initiator.progressDelegate = self; // - to show progress bar
+    // initiator.forceDfu = true/false // default false
+    // initiator.packetReceiptNotificationParameter = N // default is 12
+    initiator.logger = self // - to get log info
+    initiator.delegate = self // - to be informed about current state and errors 
+    initiator.progressDelegate = self // - to show progress bar
     // initiator.peripheralSelector = ... // the default selector is used
 
-    let controller = initiator.start()
+    let controller = initiator.start(target: peripheral)
     ...
     ```
-4. Using the DFUServiceController you may pause, resume or abort the DFU operation.
-
-5. In version 3 the API has slightly changed to better match the Swift 3 naming guidlines: 
-
-- The initiator's delegate and progressDelegate methods got renamed
-- The **SecureDFUError**, **SecureDFUProgressDelegate** and **SecureDFUServiceDelegate** have been removed (it was not accesible). Callbacks for Secure DFU are now reported by **DFUProgressDelegate** and **DFUServiceDelegate**. **DFUError** contains all secure DFU errors.
-- ```withFirmwareFile(_)``` method in **DFUServiceInitiator** has been renamed to ```with(firmware:)```
-
-Other changes in version 3:
-
-- Complete refactoring of the code
-- Support for connected devices (even if DFU Service has not been discovered when DFU started)
-- DFU now works on iOS 8 (bug fixed)
-- Other bugs fixed
+4. Using the `DFUServiceController` you may pause, resume or abort the DFU operation.
 
 ### Example
 
-Check the nRF Toolbox project ([here](https://github.com/NordicSemiconductor/IOS-nRF-Toolbox "nRF Toolbox")) for usage example (Objective-C).
+Check the nRF Toolbox project ([here](https://github.com/NordicSemiconductor/IOS-nRF-Toolbox "nRF Toolbox")).
 
 ### Issues
 

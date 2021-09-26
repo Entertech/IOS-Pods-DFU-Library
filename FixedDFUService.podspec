@@ -21,7 +21,7 @@ The nRF5x Series chips are flash-based SoCs, and as such they represent the most
   s.swift_versions   = ['4.2', '5.0', '5.1', '5.2', '5.3', '5.4', '5.5']
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.14'
-  s.source_files = 'FixedDFUService/Classes/**/*'
+  s.source_files = 'iOSDFULibrary/Classes/**/*'
 
   s.dependency 'ZIPFoundation', '= 0.9.11'
 end
