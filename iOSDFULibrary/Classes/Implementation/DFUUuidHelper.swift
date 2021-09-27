@@ -118,10 +118,10 @@ import CoreBluetooth
     /// Creates the DFU Helper with Default UUIDs.
     @objc public override init() {        
         // Legacy DFU
-        legacyDFUService      = CBUUID(string: "00001530-1212-EFDE-1523-785FEABCD123")
-        legacyDFUControlPoint = CBUUID(string: "00001531-1212-EFDE-1523-785FEABCD123")
-        legacyDFUPacket       = CBUUID(string: "00001532-1212-EFDE-1523-785FEABCD123")
-        legacyDFUVersion      = CBUUID(string: "00001534-1212-EFDE-1523-785FEABCD123")
+        legacyDFUService      = CBUUID(string: "0000FF40-1212-abcd-1523-785FEABCD123")
+        legacyDFUControlPoint = CBUUID(string: "0000FF41-1212-abcd-1523-785FEABCD123")
+        legacyDFUPacket       = CBUUID(string: "0000FF42-1212-abcd-1523-785FEABCD123")
+        legacyDFUVersion      = CBUUID(string: "0000FF43-1212-abcd-1523-785FEABCD123")
 
         // Secure DFU
         secureDFUService      = CBUUID(string: "FE59")
