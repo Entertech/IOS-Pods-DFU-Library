@@ -19,7 +19,7 @@ The nRF5x Series chips are flash-based SoCs, and as such they represent the most
   s.author           = { 'Like' => 'ke.liful@gmail.com' }
   s.source           = { :git => "https://github.com/Entertech/IOS-Pods-DFU-Library.git", :tag => s.version.to_s }
   s.swift_versions   = ['5.5']
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.0'
   s.osx.deployment_target = '10.14'
   s.source_files = 'iOSDFULibrary/Classes/**/*'
 
