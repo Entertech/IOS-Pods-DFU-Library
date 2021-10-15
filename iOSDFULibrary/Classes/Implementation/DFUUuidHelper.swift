@@ -121,7 +121,7 @@ import CoreBluetooth
         legacyDFUService      = CBUUID(string: "0000FF40-1212-abcd-1523-785FEABCD123")
         legacyDFUControlPoint = CBUUID(string: "0000FF41-1212-abcd-1523-785FEABCD123")
         legacyDFUPacket       = CBUUID(string: "0000FF42-1212-abcd-1523-785FEABCD123")
-        legacyDFUVersion      = CBUUID(string: "0000FF43-1212-abcd-1523-785FEABCD123")
+        legacyDFUVersion      = CBUUID(string: "0000FF44-1212-abcd-1523-785feabcd123")
 
         // Secure DFU
         secureDFUService      = CBUUID(string: "FE59")
