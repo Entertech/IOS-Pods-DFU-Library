@@ -1355,7 +1355,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.11.1;
+				MARKETING_VERSION = 4.11.2;
 				MODULEMAP_FILE = "Target Support Files/iOSDFULibrary-iOS/iOSDFULibrary-iOS.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.FixedDFUService;
 				PRODUCT_MODULE_NAME = iOSDFULibrary;
@@ -1632,6 +1632,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 4.11.2;
 				MODULEMAP_FILE = "Target Support Files/iOSDFULibrary-macOS/iOSDFULibrary-macOS.modulemap";
 				PRODUCT_MODULE_NAME = iOSDFULibrary;
 				PRODUCT_NAME = iOSDFULibrary;
@@ -1701,7 +1702,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.11.1;
+				MARKETING_VERSION = 4.11.2;
 				MODULEMAP_FILE = "Target Support Files/iOSDFULibrary-iOS/iOSDFULibrary-iOS.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.FixedDFUService;
 				PRODUCT_MODULE_NAME = iOSDFULibrary;
@@ -1775,6 +1776,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 4.11.2;
 				MODULEMAP_FILE = "Target Support Files/iOSDFULibrary-macOS/iOSDFULibrary-macOS.modulemap";
 				PRODUCT_MODULE_NAME = iOSDFULibrary;
 				PRODUCT_NAME = iOSDFULibrary;
