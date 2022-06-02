@@ -8,10 +8,7 @@ import PackageDescription
 let package = Package(
   name: "NordicDFU",
   platforms: [
-    .macOS(.v10_14),
-    .iOS(.v9),
-    .watchOS(.v4),
-    .tvOS(.v11)
+    .iOS(.v9)
   ],
   products: [
     .library(name: "NordicDFU", targets: ["NordicDFU"])
