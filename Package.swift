@@ -6,7 +6,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "NordicDFU",
+  name: "IOS-Pods-DFU-Library",
   platforms: [
     .macOS(.v10_14),
     .iOS(.v9),
@@ -14,7 +14,7 @@ let package = Package(
     .tvOS(.v11)
   ],
   products: [
-    .library(name: "NordicDFU", targets: ["NordicDFU"])
+    .library(name: "IOS-Pods-DFU-Library", targets: ["IOS-Pods-DFU-Library"])
   ],
   dependencies: [
     .package(
@@ -24,7 +24,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "NordicDFU",
+      name: "IOS-Pods-DFU-Library",
       dependencies: ["ZIPFoundation"],
       path: "iOSDFULibrary/Classes/"
     ),
@@ -32,7 +32,7 @@ let package = Package(
     // compile in Xcode.
     .testTarget(
       name: "Hex2BinConverterTests",
-      dependencies: ["NordicDFU"],
+      dependencies: ["IOS-Pods-DFU-Library"],
       path: "Example/Tests/"
     )
   ],
