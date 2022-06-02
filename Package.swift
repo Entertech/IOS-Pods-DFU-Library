@@ -6,12 +6,15 @@
 import PackageDescription
 
 let package = Package(
-  name: "FixedDFUService",
+  name: "NordicDFU",
   platforms: [
-    .iOS(.v10)
+    .macOS(.v10_14),
+    .iOS(.v9),
+    .watchOS(.v4),
+    .tvOS(.v11)
   ],
   products: [
-    .library(name: "FixedDFUService", targets: ["FixedDFUService"])
+    .library(name: "NordicDFU", targets: ["NordicDFU"])
   ],
   dependencies: [
     .package(
@@ -21,7 +24,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "FixedDFUService",
+      name: "NordicDFU",
       dependencies: ["ZIPFoundation"],
       path: "iOSDFULibrary/Classes/"
     ),
@@ -29,7 +32,7 @@ let package = Package(
     // compile in Xcode.
     .testTarget(
       name: "Hex2BinConverterTests",
-      dependencies: ["FixedDFUService"],
+      dependencies: ["NordicDFU"],
       path: "Example/Tests/"
     )
   ],
